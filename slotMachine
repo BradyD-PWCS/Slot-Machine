@@ -1,0 +1,57 @@
+package gambling;
+import java.util.Scanner;
+
+public class slotMachine {
+static int slot1;
+static int slot2;
+static int slot3;
+static int money;
+static int cont=1;
+static boolean won = false;
+static int round = 0;
+static Scanner lever = new Scanner(System.in);
+	public static void main(String[] args) {
+		System.out.println("welcome to the slot machine!");
+		System.out.println("press 1 to spin!");
+		if(lever.nextInt() == 1) {
+			spin();
+		}
+	}
+	public static void spin() {
+		while(cont == 1) {
+			slot1=(int)(Math.random()*10);
+			slot2=(int)(Math.random()*10);
+			slot3=(int)(Math.random()*10);
+			if(!won && round == 2) {
+				slot1 = 9;
+				slot2 = slot1;
+				slot3 = slot1 - 1;
+			}
+			while((won || round == 0) && slot1 == slot2 || slot2==slot3 || slot3==slot1) {
+				slot1=(int)(Math.random()*10);
+				slot2=(int)(Math.random()*10);
+				slot3=(int)(Math.random()*10);
+			}
+			System.out.println(slot1 + " " + slot2 + " " + slot3);
+			if(slot1 == slot2 && slot2 == slot3) {
+				System.out.println("You Hit The Jackpot!!!");
+				money += 1000;
+				won = true;
+			}
+			else if(slot1 == slot2 || slot2 == slot3 || slot1 == slot3) {
+				System.out.println("You won 25 dollars!!");
+				money += 25;
+				won = true;
+			}
+			else {
+				money -= 15;
+				won = false;
+			}
+			round++;
+			System.out.println("you have " + money + " dollars");
+			System.out.println("Type 1 to spin again.");
+			cont = lever.nextInt();
+		}
+		System.out.println("you have " + money + "dollars.");
+	}
+}
